@@ -94,7 +94,9 @@ async function fetchProject(project) {
         mod: project.mod,
         resourcePack: project.resourcePack,
 
-        loaders: project.mod ? mr.loaders : [],
+        ...(project.mod && {
+            loaders: mr.loaders
+        }),
 
         environment: getEnvironment(
             mr.client_side,
