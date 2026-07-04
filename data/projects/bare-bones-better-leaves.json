@@ -1,17 +1,16 @@
 {
-    "updated": "2026-07-04T17:59:59.277Z",
+    "type": "resourcePack",
+    "updated": "2026-07-04T18:18:56.158Z",
     "name": "Bare Bones - Better Leaves",
     "description": "Enhances the leaves textures in Bare Bones with more detail and style, improving the visual appeal while keeping the minimalist design.",
     "icon": "https://cdn.modrinth.com/data/m4qArYal/66dab1f82fccecb33f7ab329c3fd32e6fc00a9c2_96.webp",
-    "mod": false,
-    "resourcePack": true,
     "environment": "Client",
     "categories": [
         "16x",
         "blocks",
         "environment"
     ],
-    "modrinthDownloads": 244570,
+    "modrinthDownloads": 244575,
     "curseforgeDownloads": 2013,
-    "totalDownloads": 246583
+    "totalDownloads": 246588
 }
