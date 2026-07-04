@@ -62,7 +62,7 @@ async function main() {
     fs.mkdirSync(`data/projects/${props.mod_id}`, { recursive: true });
 
     fs.writeFileSync(
-        `data/projects/${props.mod_id}/project.json`,
+        `data/projects/${props.mod_id}.json`,
         JSON.stringify(output, null, 4)
     );
 }
