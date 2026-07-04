@@ -59,10 +59,10 @@ async function main() {
         totalDownloads: mr.downloads + cf.downloadCount
     };
 
-    fs.mkdirSync("data", { recursive: true });
+    fs.mkdirSync(`data/projects/${props.mod_id}`, { recursive: true });
 
     fs.writeFileSync(
-        "data/project.json",
+        `data/projects/${props.mod_id}/project.json`,
         JSON.stringify(output, null, 4)
     );
 }
