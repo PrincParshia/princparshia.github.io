@@ -31,17 +31,6 @@ function parseProperties(text) {
     return props;
 }
 
-function getEnvironment(clientSide, serverSide) {
-    const client = clientSide !== "unsupported";
-    const server = serverSide !== "unsupported";
-
-    if (client && server) return "Client or Server";
-    if (client) return "Client";
-    if (server) return "Server";
-
-    return "Unknown";
-}
-
 async function main() {
     const gradle = await get(
         "https://raw.githubusercontent.com/PrincParshia/Anemos/main/gradle.properties",
@@ -65,24 +54,12 @@ async function main() {
         description: props.description,
         icon: "https://raw.githubusercontent.com/PrincParshia/Anemos/main/common/src/main/resources/anemos.icon.png",
 
-        categories: [
-            ...mr.categories,
-            ...mr.additional_categories
-        ],
-
-        loaders: mr.loaders,
-
-        environment: getEnvironment(
-            mr.client_side,
-            mr.server_side
-        ),
-
         modrinthDownloads: mr.downloads,
         curseforgeDownloads: cf.downloadCount,
         totalDownloads: mr.downloads + cf.downloadCount
     };
 
-    fs.mkdirSync("data/projects", { recursive: true });
+    fs.mkdirSync(`data/projects/${props.mod_id}`, { recursive: true });
 
     fs.writeFileSync(
         `data/projects/${props.mod_id}.json`,
