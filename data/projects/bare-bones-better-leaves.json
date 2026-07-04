@@ -1,0 +1,17 @@
+{
+    "updated": "2026-07-04T17:51:59.903Z",
+    "name": "Bare Bones - Better Leaves",
+    "description": "Enhance leaf visuals!",
+    "icon": "https://raw.githubusercontent.com/PrincParshia/Bare-Bones-Better-Leaves/main/pack.png",
+    "mod": false,
+    "resourcePack": true,
+    "environment": "Client",
+    "categories": [
+        "16x",
+        "blocks",
+        "environment"
+    ],
+    "modrinthDownloads": 244570,
+    "curseforgeDownloads": 2013,
+    "totalDownloads": 246583
+}
