@@ -1,0 +1,38 @@
+name: Update Project Data
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate JSON
+        run: node scripts/fetch-projects.js
+
+      - name: Commit JSON
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/project.json
+
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Update project data"
+            git push
+          fi
