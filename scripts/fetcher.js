@@ -1,34 +1,13 @@
 const fs = require("fs");
 
-async function get(url, type = "json") {
+async function get(url) {
     const response = await fetch(url);
 
     if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}: ${url}`);
     }
 
-    return type === "text"
-        ? response.text()
-        : response.json();
-}
-
-function parseProperties(text) {
-    const props = {};
-
-    text.split(/\r?\n/).forEach(line => {
-        line = line.trim();
-
-        if (!line || line.startsWith("#")) return;
-
-        const i = line.indexOf("=");
-
-        if (i === -1) return;
-
-        props[line.substring(0, i).trim()] =
-            line.substring(i + 1).trim();
-    });
-
-    return props;
+    return response.json();
 }
 
 function getEnvironment(clientSide, serverSide) {
@@ -51,45 +30,12 @@ async function fetchProject(project) {
         `https://cflookup.com/${project.curseforge}.json`
     );
 
-    let props = {};
-    let name;
-    let description;
-    let icon;
-
-    if (project.mod) {
-        const gradle = await get(
-            `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/gradle.properties`,
-            "text"
-        );
-
-        props = parseProperties(gradle);
-
-        name = props.mod_name;
-        description = props.description;
-        icon = `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/common/src/main/resources/${props.mod_id}.icon.png`;
-    }
-
-    if (project.resourcePack) {
-        const mcmeta = await get(
-            `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/pack.mcmeta`
-        );
-
-        name = mr.title;
-
-        description =
-            typeof mcmeta.pack.description === "string"
-                ? mcmeta.pack.description
-                : mcmeta.pack.description.text ?? "";
-
-        icon = `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/pack.png`;
-    }
-
     const output = {
         updated: new Date().toISOString(),
 
-        name,
-        description,
-        icon,
+        name: mr.title,
+        description: mr.description,
+        icon: mr.icon_url,
 
         mod: project.mod,
         resourcePack: project.resourcePack,
