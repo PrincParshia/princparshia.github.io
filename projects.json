@@ -16,5 +16,14 @@
 
         "mod": false,
         "resourcePack": true
+    },
+    {
+        "id": "bare-bones-better-leaves",
+        "github": "Bare-Bones-Better-Leaves",
+        "modrinth": "bare-bones-better-leaves",
+        "curseforge": 1485255,
+
+        "mod": false,
+        "resourcePack": true
     }
 ]

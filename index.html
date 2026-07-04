@@ -889,14 +889,10 @@ draw();
           const manifestEntry = mod._manifest || {};
           const isResourcePack = !!mod.resourcePack;
 
-          // Type / environment tag comes first: resource packs get a "Resource Pack"
-          // tag, mods get their Client/Server environment (when the JSON has it).
-          const typeTag = isResourcePack
-            ? '<span class="tag env">Resource Pack</span>'
-            : (mod.environment ? `<span class="tag env">${pretty(mod.environment)}</span>` : '');
-
+          const envTag = mod.environment ? `<span class="tag env">${pretty(mod.environment)}</span>` : '';
           const categoryTags = (mod.categories || []).map(c => `<span class="tag category">${pretty(c)}</span>`).join('');
           const loaderTags = (mod.loaders || []).map(l => `<span class="tag">${pretty(l)}</span>`).join('');
+          const resourcePackTag = isResourcePack ? '<span class="tag">Resource Pack</span>' : '';
 
           const slug = String(mod.name || '').toLowerCase().trim().replace(/\s+/g, '-');
           const modrinthPath = isResourcePack ? 'resourcepack' : 'mod';
@@ -919,7 +915,7 @@ draw();
                   <h3>${mod.name}</h3>
                 </div>
                 <p>${mod.description || ''}</p>
-                <div class="tags">${typeTag}${categoryTags}${loaderTags}</div>
+                <div class="tags">${envTag}${categoryTags}${loaderTags}${resourcePackTag}</div>
               </div>
               <div class="download-count">${DOWNLOAD_ICON}${formatDownloads(mod.totalDownloads || 0)}</div>
               <div class="store-links">${modrinthBtn}${curseforgeBtn}</div>
