@@ -1,0 +1,20 @@
+[
+    {
+        "id": "anemos",
+        "github": "Anemos",
+        "modrinth": "anemos",
+        "curseforge": 1249202,
+
+        "mod": true,
+        "resourcePack": false
+    },
+    {
+        "id": "bare-bones-connected-glass",
+        "github": "Bare-Bones-Connected-Glass",
+        "modrinth": "bare-bones-connected-glass",
+        "curseforge": 1080570,
+
+        "mod": false,
+        "resourcePack": true
+    }
+]

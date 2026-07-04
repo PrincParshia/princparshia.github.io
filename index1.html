@@ -72,11 +72,6 @@
     pointer-events:none;
   }
 
-  .page-solid{
-    position:relative;
-    z-index:1;
-  }
-
   #matrix-canvas{
     position:fixed;
     top:0; left:0;
@@ -222,7 +217,7 @@
     min-height:100vh;
     display:flex;
     flex-direction:column;
-    justify-content:flex-start;
+    justify-content:center;
   }
   .section-title{
     font-size:28px;
@@ -238,48 +233,27 @@
     margin-bottom:40px;
   }
 
-  .project-list{
-    display:flex;
-    flex-direction:column;
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
     gap:16px;
   }
-  .project-loading{
-    font-size:14px;
-    color:var(--text-secondary);
-  }
   .project-card{
-    position:relative;
-    display:flex;
-    gap:20px;
-    align-items:stretch;
     background:var(--card);
     border:1px solid var(--border);
-    border-radius:18px;
-    padding:16px;
-    padding-right:118px;
+    border-radius:16px;
+    padding:22px;
     box-shadow:var(--shadow);
   }
-  .project-card .icon{
-    width:96px;
-    align-self:stretch;
-    border-radius:12px;
-    flex-shrink:0;
-    object-fit:cover;
-    background:var(--bg);
-    border:2px solid var(--border);
-  }
-  .project-card .body{ flex:1; min-width:0; display:flex; flex-direction:column; justify-content:center; }
-  .project-card .top-row{
-    margin-bottom:6px;
-  }
   .project-card h3{
-    font-size:17px;
+    font-size:16px;
     font-weight:700;
+    margin-bottom:8px;
   }
   .project-card p{
     font-size:13.5px;
     color:var(--text-secondary);
-    margin-bottom:10px;
+    margin-bottom:14px;
   }
   .project-card .tags{ display:flex; flex-wrap:wrap; gap:6px; }
   .project-card .tag{
@@ -287,76 +261,9 @@
     font-weight:600;
     padding:4px 10px;
     border-radius:999px;
-    background:rgba(255,255,255,0.06);
-    color:var(--text-secondary);
-    border:1px solid var(--border);
-  }
-  .project-card .tag.env{
     background:rgba(22,160,133,0.12);
     color:var(--accent-light);
-    border-color:rgba(22,160,133,0.2);
-  }
-  .project-card .tag.category{
-    background:rgba(22,160,133,0.12);
-    color:var(--accent-light);
-    border-color:rgba(22,160,133,0.2);
-  }
-
-  /* Downloads pinned to the top-right corner, store buttons pinned to the bottom-right corner */
-  .project-card .download-count{
-    position:absolute;
-    top:16px;
-    right:16px;
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:13.5px;
-    font-weight:700;
-    color:var(--text);
-    white-space:nowrap;
-  }
-  .project-card .download-count svg{
-    width:15px; height:15px;
-    stroke:var(--accent-light);
-    fill:none;
-    stroke-width:2;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-  }
-  .project-card .store-links{
-    position:absolute;
-    bottom:16px;
-    right:16px;
-    display:flex;
-    gap:6px;
-  }
-  .project-card .store-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:30px; height:30px;
-    border-radius:9px;
-    background:rgba(255,255,255,0.06);
-    border:1px solid var(--border);
-    color:var(--text-secondary);
-    transition:background 0.2s ease, color 0.2s ease;
-  }
-  .project-card .store-btn:hover{
-    background:rgba(22,160,133,0.15);
-    color:var(--accent-light);
-  }
-  .project-card .store-btn svg,
-  .project-card .store-btn img{
-    width:15px; height:15px;
-    fill:currentColor;
-    object-fit:contain;
-  }
-
-  @media (max-width: 620px){
-    .project-card{ flex-direction:column; padding-right:16px; padding-bottom:70px; }
-    .project-card .icon{ width:100%; height:100px; align-self:auto; }
-    .project-card .download-count{ top:16px; right:16px; }
-    .project-card .store-links{ bottom:16px; right:16px; }
+    border:1px solid rgba(22,160,133,0.2);
   }
 
   /* Info & Links panels under the hero */
@@ -414,12 +321,10 @@
     transition:background 0.2s ease;
   }
   .link-row:hover{ background:rgba(255,255,255,0.05); }
-  .link-row svg,
-  .link-row img{
+  .link-row svg{
     width:19px; height:19px;
     flex-shrink:0;
     fill:currentColor;
-    object-fit:contain;
   }
 
   @media (max-width: 620px){
@@ -501,11 +406,11 @@
       <h3>Links</h3>
       <div class="links-list">
         <a class="link-row" href="#" target="_blank" rel="noopener">
-          <img src="https://cdn.simpleicons.org/modrinth" alt="" width="19" height="19">
+          <svg viewBox="0 0 24 24"><path d="M12 1.5c-.8 1.7-1.9 3.6-3.1 4.9C7.1 8 5.2 8.9 3.4 9.3c-.6.1-1.1.6-1.2 1.2-.5 2.6-.5 5.4 0 8 .1.6.6 1.1 1.2 1.2 1.8.4 3.7 1.3 5.5 2.9 1.2 1.3 2.3 3.2 3.1 4.9.8-1.7 1.9-3.6 3.1-4.9 1.8-1.6 3.7-2.5 5.5-2.9.6-.1 1.1-.6 1.2-1.2.5-2.6.5-5.4 0-8-.1-.6-.6-1.1-1.2-1.2-1.8-.4-3.7-1.3-5.5-2.9-1.2-1.3-2.3-3.2-3.1-4.9z"></path></svg>
           Modrinth
         </a>
         <a class="link-row" href="#" target="_blank" rel="noopener">
-          <img src="https://cdn.simpleicons.org/curseforge" alt="" width="19" height="19">
+          <svg viewBox="0 0 24 24"><path d="M12 2 2 7v10l10 5 10-5V7L12 2zm0 2.3 7.5 3.7L12 11.7 4.5 8 12 4.3zM4 9.7l7 3.5v7.1l-7-3.5V9.7zm9 10.6v-7.1l7-3.5v7.1l-7 3.5z"></path></svg>
           CurseForge
         </a>
         <a class="link-row" href="#" target="_blank" rel="noopener">
@@ -536,20 +441,40 @@
     </div>
   </div>
   </section>
-</div>
 
-<div class="page-solid">
-  <div class="wrap">
-    <section id="projects">
-      <div class="section-inner">
-        <div class="section-title"><span class="hash">#</span> Projects</div>
-        <p class="section-desc">A few of the mods I've been building for Minecraft: Java Edition.</p>
-        <div class="project-list" id="projectList">
-          <p class="project-loading">Loading projects…</p>
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-title"><span class="hash">#</span> Projects</div>
+      <p class="section-desc">A few of the mods and tools I've been building for Minecraft: Java Edition.</p>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>Anemos</h3>
+          <p>A Fabric client mod focused on rendering and visual effect improvements — smoother transitions, better fog handling, and more.</p>
+          <div class="tags">
+            <span class="tag">Fabric</span>
+            <span class="tag">Mixin</span>
+            <span class="tag">Rendering</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>Stained Beacons</h3>
+          <p>A small Fabric mod exploring beacon block entity behavior and creative tab integration.</p>
+          <div class="tags">
+            <span class="tag">Fabric</span>
+            <span class="tag">Blocks</span>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>Reasonable Tweaks</h3>
+          <p>Gameplay and visual tweaks, including custom entity shader work for dither-based fade effects.</p>
+          <div class="tags">
+            <span class="tag">Shaders</span>
+            <span class="tag">Mixin</span>
+          </div>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -823,8 +748,8 @@ function draw() {
 resize();
 draw();
 
-// The banner image itself fades to the solid background color as the
-// page scrolls (an overlay inside the fixed banner, opacity tied to scroll).
+// Fixed banner stays in place, but gets progressively covered by the
+// background color as the page scrolls, mimicking the old scroll-away fade.
 (function initBannerFade(){
   const fade = document.getElementById('bannerFade');
   if (!fade) return;
@@ -836,79 +761,6 @@ draw();
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
   update();
-})();
-
-// Load project/mod data from data/projects/*.json and render as a stacked list
-(function loadProjects(){
-  const list = document.getElementById('projectList');
-  if (!list) return;
-
-  // Add filenames here as more mods get their own JSON file in data/projects/
-  const files = ['anemos.json'];
-
-  function formatDownloads(n){
-    if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-    if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-    return String(n);
-  }
-
-  function pretty(text){
-    const known = { neoforge: 'NeoForge', fabric: 'Fabric', forge: 'Forge', quilt: 'Quilt' };
-    return String(text)
-      .split(/[-_ ]/)
-      .map(w => known[w.toLowerCase()] || (w.charAt(0).toUpperCase() + w.slice(1)))
-      .join(' ');
-  }
-
-  const DOWNLOAD_ICON = '<svg viewBox="0 0 24 24"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>';
-  const MODRINTH_ICON = '<img src="https://cdn.simpleicons.org/modrinth" alt="Modrinth">';
-  const CURSEFORGE_ICON = '<img src="https://cdn.simpleicons.org/curseforge" alt="CurseForge">';
-
-  Promise.all(
-    files.map(f =>
-      fetch(`data/projects/${f}`)
-        .then(r => r.ok ? r.json() : null)
-        .catch(err => { console.error(`Failed to load ${f}:`, err); return null; })
-    )
-  ).then(mods => {
-    const valid = mods.filter(Boolean);
-    if (!valid.length) {
-      list.innerHTML = '<p class="project-loading">No projects found.</p>';
-      return;
-    }
-    list.innerHTML = valid.map(mod => {
-      const envTag = mod.environment ? `<span class="tag env">${pretty(mod.environment)}</span>` : '';
-      const categoryTags = (mod.categories || []).map(c => `<span class="tag category">${pretty(c)}</span>`).join('');
-      const loaderTags = (mod.loaders || []).map(l => `<span class="tag">${pretty(l)}</span>`).join('');
-
-      const slug = String(mod.name || '').toLowerCase().trim().replace(/\s+/g, '-');
-      const modrinthUrl = mod.modrinthUrl || (slug ? `https://modrinth.com/mod/${slug}` : null);
-      const curseforgeUrl = mod.curseforgeUrl || (slug ? `https://www.curseforge.com/minecraft/mc-mods/${slug}` : null);
-
-      const modrinthBtn = modrinthUrl
-        ? `<a class="store-btn" href="${modrinthUrl}" target="_blank" rel="noopener" aria-label="View on Modrinth">${MODRINTH_ICON}</a>` : '';
-      const curseforgeBtn = curseforgeUrl
-        ? `<a class="store-btn" href="${curseforgeUrl}" target="_blank" rel="noopener" aria-label="View on CurseForge">${CURSEFORGE_ICON}</a>` : '';
-
-      return `
-        <div class="project-card">
-          <img class="icon" src="${mod.icon}" alt="${mod.name} icon">
-          <div class="body">
-            <div class="top-row">
-              <h3>${mod.name}</h3>
-            </div>
-            <p>${mod.description || ''}</p>
-            <div class="tags">${envTag}${categoryTags}${loaderTags}</div>
-          </div>
-          <div class="download-count">${DOWNLOAD_ICON}${formatDownloads(mod.totalDownloads || 0)}</div>
-          <div class="store-links">${modrinthBtn}${curseforgeBtn}</div>
-        </div>
-      `;
-    }).join('');
-  }).catch(err => {
-    console.error('Project list rendering failed:', err);
-    list.innerHTML = '<p class="project-loading">Couldn\'t load projects.</p>';
-  });
 })();
 
 // Auto-calculate age from birthdate

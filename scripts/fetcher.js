@@ -42,52 +42,103 @@ function getEnvironment(clientSide, serverSide) {
     return "Unknown";
 }
 
-async function main() {
-    const gradle = await get(
-        "https://raw.githubusercontent.com/PrincParshia/Anemos/main/gradle.properties",
-        "text"
-    );
+async function fetchProject(project) {
+    let props = {};
+    let name;
+    let description;
+    let icon;
 
-    const props = parseProperties(gradle);
+    if (project.mod) {
+        const gradle = await get(
+            `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/gradle.properties`,
+            "text"
+        );
+
+        props = parseProperties(gradle);
+
+        name = props.mod_name;
+        description = props.description;
+        icon = `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/common/src/main/resources/${props.mod_id}.icon.png`;
+    }
+
+    if (project.resourcePack) {
+        const mcmeta = await get(
+            `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/pack.mcmeta`
+        );
+
+        const mrInfo = await get(
+            `https://api.modrinth.com/v2/project/${project.modrinth}`
+        );
+
+        name = mrInfo.title;
+
+        description =
+            typeof mcmeta.pack.description === "string"
+                ? mcmeta.pack.description
+                : mcmeta.pack.description.text ?? "";
+
+        icon = `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/pack.png`;
+    }
 
     const mr = await get(
-        "https://api.modrinth.com/v2/project/anemos"
+        `https://api.modrinth.com/v2/project/${project.modrinth}`
     );
 
     const cf = await get(
-        "https://cflookup.com/1249202.json"
+        `https://cflookup.com/${project.curseforge}.json`
     );
 
     const output = {
         updated: new Date().toISOString(),
 
-        name: props.mod_name,
-        description: props.description,
-        icon: "https://raw.githubusercontent.com/PrincParshia/Anemos/main/common/src/main/resources/anemos.icon.png",
+        name,
+        description,
+        icon,
+
+        mod: project.mod,
+        resourcePack: project.resourcePack,
 
         categories: [
             ...mr.categories,
             ...mr.additional_categories
         ],
 
-        loaders: mr.loaders,
-
-        environment: getEnvironment(
-            mr.client_side,
-            mr.server_side
-        ),
-
         modrinthDownloads: mr.downloads,
         curseforgeDownloads: cf.downloadCount,
         totalDownloads: mr.downloads + cf.downloadCount
     };
 
-    fs.mkdirSync("data/projects", { recursive: true });
+    if (project.mod) {
+        output.loaders = mr.loaders;
+
+        output.environment = getEnvironment(
+            mr.client_side,
+            mr.server_side
+        );
+    }
 
     fs.writeFileSync(
-        `data/projects/${props.mod_id}.json`,
+        `data/projects/${project.id}.json`,
         JSON.stringify(output, null, 4)
     );
+}
+
+async function main() {
+    fs.mkdirSync("data/projects", { recursive: true });
+
+    const projects = JSON.parse(
+        fs.readFileSync("projects.json", "utf8")
+    );
+
+    for (const project of projects) {
+        try {
+            await fetchProject(project);
+            console.log(`✓ ${project.id}`);
+        } catch (err) {
+            console.error(`✗ ${project.id}`);
+            console.error(err);
+        }
+    }
 }
 
 main().catch(err => {
