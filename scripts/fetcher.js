@@ -21,7 +21,7 @@ function getEnvironment(clientSide, serverSide) {
     return "Unknown";
 }
 
-async function fetchProject(project) {
+async function fetchProject(project, type) {
     const mr = await get(
         `https://api.modrinth.com/v2/project/${project.modrinth}`
     );
@@ -31,16 +31,15 @@ async function fetchProject(project) {
     );
 
     const output = {
+        type,
+
         updated: new Date().toISOString(),
 
         name: mr.title,
         description: mr.description,
         icon: mr.icon_url,
 
-        mod: project.mod,
-        resourcePack: project.resourcePack,
-
-        ...(project.mod && {
+        ...(type === "mod" && {
             loaders: mr.loaders
         }),
 
@@ -60,7 +59,7 @@ async function fetchProject(project) {
     };
 
     fs.writeFileSync(
-        `data/projects/${project.id}.json`,
+        `data/projects/${project.slug}.json`,
         JSON.stringify(output, null, 4)
     );
 }
@@ -72,12 +71,22 @@ async function main() {
         fs.readFileSync("projects.json", "utf8")
     );
 
-    for (const project of projects) {
+    for (const project of projects.mods) {
         try {
-            await fetchProject(project);
-            console.log(`✓ ${project.id}`);
+            await fetchProject(project, "mod");
+            console.log(`✓ ${project.slug}`);
         } catch (err) {
-            console.error(`✗ ${project.id}`);
+            console.error(`✗ ${project.slug}`);
+            console.error(err);
+        }
+    }
+
+    for (const project of projects.resourcePacks) {
+        try {
+            await fetchProject(project, "resourcePack");
+            console.log(`✓ ${project.slug}`);
+        } catch (err) {
+            console.error(`✗ ${project.slug}`);
             console.error(err);
         }
     }

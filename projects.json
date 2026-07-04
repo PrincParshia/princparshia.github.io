@@ -1,29 +1,21 @@
-[
-    {
-        "id": "anemos",
-        "github": "Anemos",
-        "modrinth": "anemos",
-        "curseforge": 1249202,
-
-        "mod": true,
-        "resourcePack": false
-    },
-    {
-        "id": "bare-bones-connected-glass",
-        "github": "Bare-Bones-Connected-Glass",
-        "modrinth": "bare-bones-connected-glass",
-        "curseforge": 1080570,
-
-        "mod": false,
-        "resourcePack": true
-    },
-    {
-        "id": "bare-bones-better-leaves",
-        "github": "Bare-Bones-Better-Leaves",
+{
+    "mods": [
+        {
+            "slug": "anemos",
+            "modrinth": "anemos",
+            "curseforge": 1249202
+        }
+    ],
+    "resourcePacks": [
+        {
+            "slug": "bare-bones-connected-glass",
+            "modrinth": "bare-bones-connected-glass",
+            "curseforge": 1080570
+        },
+        {
+        "slug": "bare-bones-better-leaves",
         "modrinth": "bare-bones-better-leaves",
-        "curseforge": 1485255,
-
-        "mod": false,
-        "resourcePack": true
+        "curseforge": 1485255
     }
-]
+    ]
+}
