@@ -1,0 +1,16 @@
+{
+    "updated": "2026-07-04T13:01:50.594Z",
+    "name": "Bare Bones - Connected Glass",
+    "description": "Makes glass blocks and panes connect seamlessly.",
+    "icon": "https://raw.githubusercontent.com/PrincParshia/Bare-Bones-Connected-Glass/main/pack.png",
+    "mod": false,
+    "resourcePack": true,
+    "categories": [
+        "16x",
+        "blocks",
+        "tweaks"
+    ],
+    "modrinthDownloads": 307507,
+    "curseforgeDownloads": 101528,
+    "totalDownloads": 409035
+}
