@@ -1,8 +1,8 @@
 {
-    "updated": "2026-07-04T17:51:59.903Z",
+    "updated": "2026-07-04T17:59:59.277Z",
     "name": "Bare Bones - Better Leaves",
-    "description": "Enhance leaf visuals!",
-    "icon": "https://raw.githubusercontent.com/PrincParshia/Bare-Bones-Better-Leaves/main/pack.png",
+    "description": "Enhances the leaves textures in Bare Bones with more detail and style, improving the visual appeal while keeping the minimalist design.",
+    "icon": "https://cdn.modrinth.com/data/m4qArYal/66dab1f82fccecb33f7ab329c3fd32e6fc00a9c2_96.webp",
     "mod": false,
     "resourcePack": true,
     "environment": "Client",
