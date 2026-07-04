@@ -21,7 +21,7 @@ jobs:
           node-version: 22
 
       - name: Generate JSON
-        run: node scripts/fetch-projects.js
+        run: node scripts/fetcher.js
 
       - name: Commit JSON
         run: |
