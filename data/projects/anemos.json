@@ -1,9 +1,18 @@
 {
-    "updated": "2026-07-04T11:26:02.086Z",
+    "updated": "2026-07-04T11:57:10.255Z",
     "name": "Anemos",
     "description": "Unleash the true gamma and conquer the darkness!",
     "icon": "https://raw.githubusercontent.com/PrincParshia/Anemos/main/common/src/main/resources/anemos.icon.png",
+    "categories": [
+        "cursed",
+        "utility"
+    ],
+    "loaders": [
+        "fabric",
+        "neoforge"
+    ],
+    "environment": "Client",
     "modrinthDownloads": 6655,
-    "curseforgeDownloads": 2096,
-    "totalDownloads": 8751
+    "curseforgeDownloads": 2097,
+    "totalDownloads": 8752
 }
