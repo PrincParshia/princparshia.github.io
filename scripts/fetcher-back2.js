@@ -43,14 +43,6 @@ function getEnvironment(clientSide, serverSide) {
 }
 
 async function fetchProject(project) {
-    const mr = await get(
-        `https://api.modrinth.com/v2/project/${project.modrinth}`
-    );
-
-    const cf = await get(
-        `https://cflookup.com/${project.curseforge}.json`
-    );
-
     let props = {};
     let name;
     let description;
@@ -74,7 +66,11 @@ async function fetchProject(project) {
             `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/pack.mcmeta`
         );
 
-        name = mr.title;
+        const mrInfo = await get(
+            `https://api.modrinth.com/v2/project/${project.modrinth}`
+        );
+
+        name = mrInfo.title;
 
         description =
             typeof mcmeta.pack.description === "string"
@@ -83,6 +79,14 @@ async function fetchProject(project) {
 
         icon = `https://raw.githubusercontent.com/PrincParshia/${project.github}/main/pack.png`;
     }
+
+    const mr = await get(
+        `https://api.modrinth.com/v2/project/${project.modrinth}`
+    );
+
+    const cf = await get(
+        `https://cflookup.com/${project.curseforge}.json`
+    );
 
     const output = {
         updated: new Date().toISOString(),
@@ -94,13 +98,6 @@ async function fetchProject(project) {
         mod: project.mod,
         resourcePack: project.resourcePack,
 
-        loaders: project.mod ? mr.loaders : [],
-
-        environment: getEnvironment(
-            mr.client_side,
-            mr.server_side
-        ),
-
         categories: [
             ...mr.categories,
             ...mr.additional_categories
@@ -110,6 +107,15 @@ async function fetchProject(project) {
         curseforgeDownloads: cf.downloadCount,
         totalDownloads: mr.downloads + cf.downloadCount
     };
+
+    if (project.mod) {
+        output.loaders = mr.loaders;
+
+        output.environment = getEnvironment(
+            mr.client_side,
+            mr.server_side
+        );
+    }
 
     fs.writeFileSync(
         `data/projects/${project.id}.json`,
