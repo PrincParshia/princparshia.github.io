@@ -21,41 +21,47 @@ function getEnvironment(clientSide, serverSide) {
     return "Unknown";
 }
 
+function getUpdatedTime() {
+    return new Date().toLocaleString("sv-SE", {
+        timeZone: "UTC"
+    }) + " UTC";
+}
+
 async function fetchProject(project, type) {
-    const mr = await get(
+    const modrinth = await get(
         `https://api.modrinth.com/v2/project/${project.modrinth}`
     );
 
-    const cf = await get(
+    const curseforge = await get(
         `https://cflookup.com/${project.curseforge}.json`
     );
 
     const output = {
+        updated: getUpdatedTime(),
+
         type,
 
-        updated: new Date().toISOString(),
-
-        name: mr.title,
-        description: mr.description,
-        icon: mr.icon_url,
+        name: modrinth.title,
+        description: modrinth.description,
+        icon: modrinth.icon_url,
 
         ...(type === "mod" && {
-            loaders: mr.loaders
+            loaders: modrinth.loaders
         }),
 
         environment: getEnvironment(
-            mr.client_side,
-            mr.server_side
+            modrinth.client_side,
+            modrinth.server_side
         ),
 
         categories: [
-            ...mr.categories,
-            ...mr.additional_categories
+            ...modrinth.categories,
+            ...modrinth.additional_categories
         ],
 
-        modrinthDownloads: mr.downloads,
-        curseforgeDownloads: cf.downloadCount,
-        totalDownloads: mr.downloads + cf.downloadCount
+        modrinthDownloads: modrinth.downloads,
+        curseforgeDownloads: curseforge.downloadCount,
+        totalDownloads: modrinth.downloads + curseforge.downloadCount
     };
 
     fs.writeFileSync(

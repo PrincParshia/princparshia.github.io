@@ -1,0 +1,21 @@
+{
+    "updated": "2026-07-05 23:13:27 UTC",
+    "type": "mod",
+    "name": "Brightness Aura",
+    "description": "Darkness? Never heard of it",
+    "icon": "https://cdn.modrinth.com/data/vVldwjIr/b9d98fcdb2622093ffba123bd958fae515bf11d5.png",
+    "loaders": [
+        "fabric",
+        "neoforge"
+    ],
+    "environment": "Client",
+    "categories": [
+        "cursed",
+        "utility",
+        "game-mechanics",
+        "magic"
+    ],
+    "modrinthDownloads": 56950,
+    "curseforgeDownloads": 12793,
+    "totalDownloads": 69743
+}

@@ -260,8 +260,10 @@
     box-shadow:var(--shadow);
   }
   .project-card .icon{
-    width:96px;
-    align-self:stretch;
+    display:block;
+    width:84px;
+    height:84px;
+    align-self:center;
     border-radius:12px;
     flex-shrink:0;
     object-fit:cover;
@@ -448,6 +450,7 @@
     html{ scroll-behavior:auto; }
     .banner, .nav-panel, .hero .pfp-wrap, .hero .intro > *{ animation:none; }
   }
+
 </style>
 </head>
 <body>
@@ -863,20 +866,25 @@ draw();
   const MODRINTH_ICON = '<img src="https://cdn.simpleicons.org/modrinth" alt="Modrinth">';
   const CURSEFORGE_ICON = '<img src="https://cdn.simpleicons.org/curseforge" alt="CurseForge">';
 
-  fetch('projects.json')
+  fetch('projects.json', { cache: 'no-store' })
     .then(r => r.ok ? r.json() : Promise.reject(new Error(`projects.json returned ${r.status}`)))
-    .then(manifest => {
-      if (!Array.isArray(manifest) || !manifest.length) {
+    .then(manifestData => {
+      // Manifest shape: { mods: [{ slug, modrinth, curseforge }, ...], resourcePacks: [...] }
+      const mods = Array.isArray(manifestData.mods) ? manifestData.mods.map(e => ({ ...e, type: 'mod' })) : [];
+      const packs = Array.isArray(manifestData.resourcePacks) ? manifestData.resourcePacks.map(e => ({ ...e, type: 'resourcePack' })) : [];
+      const manifest = [...mods, ...packs];
+
+      if (!manifest.length) {
         list.innerHTML = '<p class="project-loading">No projects found.</p>';
         return;
       }
 
       return Promise.all(
         manifest.map(entry =>
-          fetch(`data/projects/${entry.id}.json`)
+          fetch(`data/projects/${entry.slug}.json`, { cache: 'no-store' })
             .then(r => r.ok ? r.json() : null)
             .then(data => data ? { ...data, _manifest: entry } : null)
-            .catch(err => { console.error(`Failed to load data/projects/${entry.id}.json:`, err); return null; })
+            .catch(err => { console.error(`Failed to load data/projects/${entry.slug}.json:`, err); return null; })
         )
       ).then(mods => {
         const valid = mods.filter(Boolean);
@@ -887,7 +895,8 @@ draw();
 
         list.innerHTML = valid.map(mod => {
           const manifestEntry = mod._manifest || {};
-          const isResourcePack = !!mod.resourcePack;
+          const type = String(mod.type || manifestEntry.type || (mod.resourcePack ? 'resourcePack' : 'mod')).toLowerCase();
+          const isResourcePack = type === 'resourcepack' || type === 'resource-pack' || type === 'resource_pack' || type === 'rp';
 
           const envTag = mod.environment ? `<span class="tag env">${pretty(mod.environment)}</span>` : '';
           const categoryTags = (mod.categories || []).map(c => `<span class="tag category">${pretty(c)}</span>`).join('');
@@ -998,6 +1007,7 @@ draw();
   moveIndicatorTo(document.querySelector('.nav-btn.active'), false);
   window.addEventListener('resize', () => moveIndicatorTo(document.querySelector('.nav-btn.active'), false));
 })();
+
 
 </script>
 </body>

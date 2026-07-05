@@ -4,6 +4,11 @@
             "slug": "anemos",
             "modrinth": "anemos",
             "curseforge": 1249202
+        },
+        {
+            "slug": "brightness-aura",
+            "modrinth": "brightness-aura",
+            "curseforge": 1224757
         }
     ],
     "resourcePacks": [
@@ -13,9 +18,14 @@
             "curseforge": 1080570
         },
         {
-        "slug": "bare-bones-better-leaves",
-        "modrinth": "bare-bones-better-leaves",
-        "curseforge": 1485255
-    }
+            "slug": "bare-bones-better-leaves",
+            "modrinth": "bare-bones-better-leaves",
+            "curseforge": 1485255
+        },
+        {
+            "slug": "bare-bones-low-on-fire",
+            "modrinth": "bare-bones-low-on-fire",
+            "curseforge": 1484359
+        }
     ]
 }
