@@ -1,0 +1,19 @@
+{
+    "updated": "2026-07-06 07:01:52 UTC",
+    "type": "mod",
+    "name": "3D End Crystal",
+    "description": "3D and Animated End Crystal!",
+    "icon": "https://cdn.modrinth.com/data/FMrscgvv/78dfe6e4b75ed0661381059dc625de0c12c8f832_96.webp",
+    "loaders": [
+        "fabric",
+        "neoforge"
+    ],
+    "environment": "Client",
+    "categories": [
+        "decoration",
+        "utility"
+    ],
+    "modrinthDownloads": 1108,
+    "curseforgeDownloads": 152,
+    "totalDownloads": 1260
+}

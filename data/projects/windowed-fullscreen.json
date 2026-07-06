@@ -1,0 +1,19 @@
+{
+    "updated": "2026-07-06 07:01:49 UTC",
+    "type": "mod",
+    "name": "Windowed Fullscreen",
+    "description": "Enables windowed fullscreen mode, allowing for a cleaner experience while retaining access to the taskbar and panel or other apps.",
+    "icon": "https://cdn.modrinth.com/data/tiZ50Qti/bd891253d80f64ec997435a6b3aa51cc2e6a2a6c_96.webp",
+    "loaders": [
+        "fabric",
+        "neoforge"
+    ],
+    "environment": "Client",
+    "categories": [
+        "cursed",
+        "utility"
+    ],
+    "modrinthDownloads": 36871,
+    "curseforgeDownloads": 56800,
+    "totalDownloads": 93671
+}
