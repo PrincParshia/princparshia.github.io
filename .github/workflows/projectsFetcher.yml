@@ -1,4 +1,4 @@
-name: Update Projects Data
+name: Fetch Projects
 
 on:
   workflow_dispatch:
@@ -20,8 +20,8 @@ jobs:
         with:
           node-version: 22
 
-      - name: Generate JSON
-        run: node scripts/fetcher.js
+      - name: Fetch Projects
+        run: node scripts/projectsFetcher.js
 
       - name: Commit JSON
         run: |
@@ -33,6 +33,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No Changes"
           else
-            git commit -m "Update Projects Data"
+            git commit -m "Fetch Projects"
             git push
           fi
