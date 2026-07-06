@@ -112,7 +112,6 @@
     height:calc(100% - 10px);
     border-radius:32px;
     background:var(--accent);
-    box-shadow:0 2px 8px rgba(22,160,133,0.45);
     transition:transform 0.35s cubic-bezier(0.65, 0, 0.35, 1), width 0.35s cubic-bezier(0.65, 0, 0.35, 1);
     z-index:0;
   }
@@ -267,7 +266,7 @@
     flex-shrink:0;
     overflow:hidden;
     background:var(--bg);
-    border:2px solid var(--border);
+    border:1px solid var(--border);
   }
   .project-card .icon{
     display:block;
@@ -295,9 +294,12 @@
     overflow:hidden;
     text-overflow:ellipsis;
   }
-  .project-card .tags{ display:flex; flex-wrap:nowrap; gap:6px; overflow:hidden; }
+  .project-card .tags{ display:flex; flex-wrap:nowrap; align-items:center; gap:6px; overflow:hidden; }
   .project-card .tag{
     flex-shrink:0;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
     white-space:nowrap;
     font-size:11.5px;
     font-weight:600;
@@ -306,28 +308,19 @@
     background:rgba(255,255,255,0.06);
     color:var(--text-secondary);
     border:1px solid var(--border);
-    display:inline-flex;
-    align-items:center;
-    gap:5px;
   }
   .project-card .tag svg{
-    width:12px; height:12px;
+    width:15px; height:15px;
+    flex-shrink:0;
     stroke:currentColor;
     fill:none;
-    stroke-width:2;
+    stroke-width:2.25;
     stroke-linecap:round;
     stroke-linejoin:round;
-    flex-shrink:0;
   }
-  .project-card .tag.env{
-    background:rgba(22,160,133,0.12);
-    color:var(--accent-light);
-    border-color:rgba(22,160,133,0.2);
-  }
-  .project-card .tag.category{
-    background:rgba(22,160,133,0.12);
-    color:var(--accent-light);
-    border-color:rgba(22,160,133,0.2);
+  .project-card .tag.more{
+    background:rgba(255,255,255,0.12);
+    color:var(--text);
   }
 
   /* Downloads pinned to the top-right corner, store buttons pinned to the bottom-right corner */
@@ -337,19 +330,20 @@
     right:16px;
     display:flex;
     align-items:center;
-    gap:6px;
+    gap:5px;
     font-size:13.5px;
-    font-weight:700;
-    color:var(--text);
+    font-weight:600;
+    color:#fff;
     white-space:nowrap;
   }
   .project-card .download-count svg{
-    width:15px; height:15px;
-    stroke:var(--accent-light);
+    width:16px; height:16px;
+    stroke:#fff;
     fill:none;
-    stroke-width:2;
+    stroke-width:3;
     stroke-linecap:round;
     stroke-linejoin:round;
+    transform:translateY(-1px);
   }
   .project-card .store-links{
     position:absolute;
@@ -370,8 +364,8 @@
     transition:background 0.2s ease, color 0.2s ease;
   }
   .project-card .store-btn:hover{
-    background:rgba(22,160,133,0.15);
-    color:var(--accent-light);
+    background:rgba(255,255,255,0.12);
+    color:var(--text);
   }
   .project-card .store-btn svg,
   .project-card .store-btn img{
@@ -398,7 +392,7 @@
     background:var(--card);
     border:1px solid var(--border);
     border-radius:20px;
-    padding:26px 28px;
+    padding:26px;
     box-shadow:var(--shadow);
   }
   .info-box h3{
@@ -434,7 +428,7 @@
     align-items:center;
     gap:12px;
     padding:10px;
-    border-radius:14px;
+    border-radius:10px;
     color:var(--text);
     text-decoration:none;
     font-size:14px;
@@ -603,6 +597,13 @@ const BAYER4 = [
 ];
 function bayer(c, r) { return BAYER4[r & 3][c & 3] / 16; }
 
+// Zone where the grid dissolves into the blurred banner above it.
+// Below FADE_START: no pixels at all (pure banner).
+// Between FADE_START and FADE_END: pixels dither in exactly like the
+// cursor-hover dissolve (proximity vs. per-pixel bayer threshold + a
+// dimmed in-between state), so the boundary reads as a soft, grainy
+// melt instead of a line.
+// Above FADE_END: the grid behaves exactly as before.
 const FADE_START = 0.28;
 const FADE_END = 0.52;
 
@@ -610,9 +611,11 @@ let W, H, COLS, ROWS;
 let mouse = { x: -9999, y: -9999 };
 let grid = [];
 
+// VOID blobs — carve empty holes through the field (many, big)
 const NUM_VOID_BLOBS = 35;
 let voidBlobs = [];
 
+// SLIME blobs — clusters of high-opacity pixels (chunky islands)
 const NUM_SLIME_BLOBS = 14;
 let slimeBlobs = [];
 
@@ -625,8 +628,8 @@ function makeBlob(isSlime) {
     tx: Math.random() * W,
     ty: H * 0.5 + Math.random() * H * 0.5,
     radius: isSlime
-      ? Math.random() * 90 + 60
-      : Math.random() * 150 + 100,
+      ? Math.random() * 90 + 60    // slime chunks — medium sized
+      : Math.random() * 150 + 100, // void holes — big
     pulsePhase: Math.random() * Math.PI * 2,
     pulseSpeed: Math.random() * 0.008 + 0.003,
     pulseAmp: Math.random() * 25 + 10,
@@ -671,6 +674,7 @@ window.addEventListener('resize', resize);
 window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
 
+// Ghost slime blobs that randomly spawn and fade
 let ghosts = [];
 let ghostTimer = 100;
 
@@ -842,6 +846,8 @@ function draw() {
 resize();
 draw();
 
+// The banner image itself fades to the solid background color as the
+// page scrolls (an overlay inside the fixed banner, opacity tied to scroll).
 (function initBannerFade(){
   const fade = document.getElementById('bannerFade');
   if (!fade) return;
@@ -855,6 +861,9 @@ draw();
   update();
 })();
 
+// Load the project manifest (projects.json, alongside index.html) and then
+// fetch each project's own JSON from data/projects/{id}.json — nothing here
+// needs to be edited by hand when a new mod/resource pack is added.
 (function loadProjects(){
   const list = document.getElementById('projectList');
   if (!list) return;
@@ -877,23 +886,22 @@ draw();
   const RESOURCEPACK_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 17.6l-2 -1.1v-2.5"/><path d="M4 10v-2.5l2 -1.1"/><path d="M10 4.1l2 -1.1l2 1.1"/><path d="M18 6.4l2 1.1v2.5"/><path d="M20 14v2.5l-2 1.12"/><path d="M14 19.9l-2 1.1l-2 -1.1"/><path d="M12 12l2 -1.1"/><path d="M18 8.6l2 -1.1"/><path d="M12 12l0 2.5"/><path d="M12 18.5l0 2.5"/><path d="M12 12l-2 -1.12"/><path d="M6 8.6l-2 -1.1"/></svg>';
   const CLIENT_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 4a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-12"/><path d="M3 13h18"/><path d="M8 21h8"/><path d="M10 17l-.5 4"/><path d="M14 17l.5 4"/></svg>';
   const SERVER_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3"/><path d="M3 15a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -2"/><path d="M7 8l0 .01"/><path d="M7 16l0 .01"/></svg>';
-  const BOTH_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg>';
+  const WORLD_ICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg>';
+
+  function environmentIcon(env){
+    const e = String(env || '').toLowerCase();
+    if (e === 'client') return CLIENT_ICON;
+    if (e === 'server') return SERVER_ICON;
+    return WORLD_ICON;
+  }
+
   const MODRINTH_ICON = '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Modrinth</title><path d="M12.252.004a11.78 11.768 0 0 0-8.92 3.73 11 10.999 0 0 0-2.17 3.11 11.37 11.359 0 0 0-1.16 5.169c0 1.42.17 2.5.6 3.77.24.759.77 1.899 1.17 2.529a12.3 12.298 0 0 0 8.85 5.639c.44.05 2.54.07 2.76.02.2-.04.22.1-.26-1.7l-.36-1.37-1.01-.06a8.5 8.489 0 0 1-5.18-1.8 5.34 5.34 0 0 1-1.3-1.26c0-.05.34-.28.74-.5a37.572 37.545 0 0 1 2.88-1.629c.03 0 .5.45 1.06.98l1 .97 2.07-.43 2.06-.43 1.47-1.47c.8-.8 1.48-1.5 1.48-1.52 0-.09-.42-1.63-.46-1.7-.04-.06-.2-.03-1.02.18-.53.13-1.2.3-1.45.4l-.48.15-.53.53-.53.53-.93.1-.93.07-.52-.5a2.7 2.7 0 0 1-.96-1.7l-.13-.6.43-.57c.68-.9.68-.9 1.46-1.1.4-.1.65-.2.83-.33.13-.099.65-.579 1.14-1.069l.9-.9-.7-.7-.7-.7-1.95.54c-1.07.3-1.96.53-1.97.53-.03 0-2.23 2.48-2.63 2.97l-.29.35.28 1.03c.16.56.3 1.16.31 1.34l.03.3-.34.23c-.37.23-2.22 1.3-2.84 1.63-.36.2-.37.2-.44.1-.08-.1-.23-.6-.32-1.03-.18-.86-.17-2.75.02-3.73a8.84 8.839 0 0 1 7.9-6.93c.43-.03.77-.08.78-.1.06-.17.5-2.999.47-3.039-.01-.02-.1-.02-.2-.03Zm3.68.67c-.2 0-.3.1-.37.38-.06.23-.46 2.42-.46 2.52 0 .04.1.11.22.16a8.51 8.499 0 0 1 2.99 2 8.38 8.379 0 0 1 2.16 3.449 6.9 6.9 0 0 1 .4 2.8c0 1.07 0 1.27-.1 1.73a9.37 9.369 0 0 1-1.76 3.769c-.32.4-.98 1.06-1.37 1.38-.38.32-1.54 1.1-1.7 1.14-.1.03-.1.06-.07.26.03.18.64 2.56.7 2.78l.06.06a12.07 12.058 0 0 0 7.27-9.4c.13-.77.13-2.58 0-3.4a11.96 11.948 0 0 0-5.73-8.578c-.7-.42-2.05-1.06-2.25-1.06Z"/></svg>';
   const CURSEFORGE_ICON = '<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>CurseForge</title><path d="M18.326 9.2145S23.2261 8.4418 24 6.1882h-7.5066V4.4H0l2.0318 2.3576V9.173s5.1267-.2665 7.1098 1.2372c2.7146 2.516-3.053 5.917-3.053 5.917L5.0995 19.6c1.5465-1.4726 4.494-3.3775 9.8983-3.2857-2.0565.65-4.1245 1.6651-5.7344 3.2857h10.9248l-1.0288-3.2726s-7.918-4.6688-.8336-7.1127z"/></svg>';
-
-  function envIcon(env){
-    const e = String(env || '').toLowerCase();
-    const hasClient = e.includes('client');
-    const hasServer = e.includes('server');
-    if (hasClient && hasServer) return BOTH_ICON;
-    if (hasClient) return CLIENT_ICON;
-    if (hasServer) return SERVER_ICON;
-    return BOTH_ICON;
-  }
 
   fetch('projects.json', { cache: 'no-store' })
     .then(r => r.ok ? r.json() : Promise.reject(new Error(`projects.json returned ${r.status}`)))
     .then(manifestData => {
+      // Manifest shape: { mods: [{ slug, modrinth, curseforge }, ...], resourcePacks: [...] }
       const mods = Array.isArray(manifestData.mods) ? manifestData.mods.map(e => ({ ...e, type: 'mod' })) : [];
       const packs = Array.isArray(manifestData.resourcePacks) ? manifestData.resourcePacks.map(e => ({ ...e, type: 'resourcePack' })) : [];
       const manifest = [...mods, ...packs];
@@ -923,10 +931,21 @@ draw();
           const type = String(mod.type || manifestEntry.type || (mod.resourcePack ? 'resourcePack' : 'mod')).toLowerCase();
           const isResourcePack = type === 'resourcepack' || type === 'resource-pack' || type === 'resource_pack' || type === 'rp';
 
-          const envTag = mod.environment ? `<span class="tag env">${envIcon(mod.environment)}${pretty(mod.environment)}</span>` : '';
-          const categoryTags = (mod.categories || []).map(c => `<span class="tag category">${pretty(c)}</span>`).join('');
-          const loaderTags = (mod.loaders || []).map(l => `<span class="tag">${pretty(l)}</span>`).join('');
+          const envTag = mod.environment ? `<span class="tag">${environmentIcon(mod.environment)}${pretty(mod.environment)}</span>` : '';
+          const categoryTags = (mod.categories || []).map(c => `<span class="tag">${pretty(c)}</span>`);
+          const loaderTagsArr = (mod.loaders || []).map(l => `<span class="tag">${pretty(l)}</span>`);
+          const loaderTags = loaderTagsArr.join('');
           const resourcePackTag = isResourcePack ? `<span class="tag">${RESOURCEPACK_ICON}Resource Pack</span>` : '';
+
+          // Env, loaders, and Resource Pack are always shown in full. Categories are
+          // the only thing that compresses into a "+N" tag, trimmed just enough to
+          // keep the whole row within a reasonable total tag budget.
+          const maxTotal = 5;
+          const reserved = (envTag ? 1 : 0) + loaderTagsArr.length + (resourcePackTag ? 1 : 0);
+          const categoryBudget = Math.max(0, maxTotal - reserved);
+          const visibleCategories = categoryTags.slice(0, categoryBudget);
+          const hiddenCategoryCount = categoryTags.length - visibleCategories.length;
+          const moreTag = hiddenCategoryCount > 0 ? `<span class="tag more">+${hiddenCategoryCount}</span>` : '';
 
           const slug = String(mod.name || '').toLowerCase().trim().replace(/\s+/g, '-');
           const modrinthPath = isResourcePack ? 'resourcepack' : 'mod';
@@ -951,7 +970,7 @@ draw();
                   <h3>${mod.name}</h3>
                 </div>
                 <p>${mod.description || ''}</p>
-                <div class="tags">${envTag}${categoryTags}${loaderTags}${resourcePackTag}</div>
+                <div class="tags">${envTag}${visibleCategories.join('')}${loaderTags}${resourcePackTag}${moreTag}</div>
               </div>
               <div class="download-count">${DOWNLOAD_ICON}${formatDownloads(mod.totalDownloads || 0)}</div>
               <div class="store-links">${modrinthBtn}${curseforgeBtn}</div>
@@ -966,8 +985,9 @@ draw();
     });
 })();
 
+// Auto-calculate age from birthdate
 (function setAge(){
-  const birth = new Date(2011, 4, 20);
+  const birth = new Date(2011, 4, 20); // May 20, 2011 (month is 0-indexed)
   const now = new Date();
   let age = now.getFullYear() - birth.getFullYear();
   const hasHadBirthdayThisYear =
@@ -978,6 +998,7 @@ draw();
   if (el) el.textContent = age;
 })();
 
+// Sliding indicator + smooth-scroll nav
 (function initNav(){
   const indicator = document.querySelector('.nav-panel .indicator');
   const btns = Array.from(document.querySelectorAll('.nav-btn'));
@@ -998,6 +1019,7 @@ draw();
     moveIndicatorTo(btn);
   }
 
+  // Click: smooth-scroll to the target section
   btns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1012,6 +1034,7 @@ draw();
     });
   });
 
+  // Scroll-spy: highlight the nav button matching the section currently in view
   let isProgrammaticScroll = false;
   let scrollEndTimer = null;
 

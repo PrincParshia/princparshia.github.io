@@ -1,14 +1,14 @@
 {
     "mods": [
+    		{
+            "slug": "brightness-aura",
+            "modrinth": "brightness-aura",
+            "curseforge": 1224757
+        },
         {
             "slug": "anemos",
             "modrinth": "anemos",
             "curseforge": 1249202
-        },
-        {
-            "slug": "brightness-aura",
-            "modrinth": "brightness-aura",
-            "curseforge": 1224757
         }
     ],
     "resourcePacks": [
@@ -26,6 +26,16 @@
             "slug": "bare-bones-low-on-fire",
             "modrinth": "bare-bones-low-on-fire",
             "curseforge": 1062343
+        },
+        {
+            "slug": "bare-bones-3d-mace",
+            "modrinth": "bare-bones-3d-mace",
+            "curseforge": 1061222
+        },
+        {
+            "slug": "bare-bones-emissive-ores",
+            "modrinth": "bare-bones-emissive-ores",
+            "curseforge": 1226847
         }
     ]
 }
