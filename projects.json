@@ -1,14 +1,24 @@
 {
     "mods": [
-    		{
+        {
             "slug": "brightness-aura",
             "modrinth": "brightness-aura",
             "curseforge": 1224757
         },
         {
+            "slug": "windowed-fullscreen",
+            "modrinth": "windowed-fullscreen",
+            "curseforge": 1224792
+        },
+        {
             "slug": "anemos",
             "modrinth": "anemos",
             "curseforge": 1249202
+        },
+        {
+            "slug": "td-end-crystal",
+            "modrinth": "td-end-crystal",
+            "curseforge": 1551623
         }
     ],
     "resourcePacks": [
@@ -21,6 +31,11 @@
             "slug": "bare-bones-better-leaves",
             "modrinth": "bare-bones-better-leaves",
             "curseforge": 1485255
+        },
+        {
+            "slug": "bare-bones-bushy-leaves",
+            "modrinth": "bare-bones-bushy-leaves",
+            "curseforge": 1441585
         },
         {
             "slug": "bare-bones-low-on-fire",
@@ -36,6 +51,21 @@
             "slug": "bare-bones-emissive-ores",
             "modrinth": "bare-bones-emissive-ores",
             "curseforge": 1226847
+        },
+        {
+            "slug": "enchanted-bare-bones",
+            "modrinth": "enchanted-bare-bones",
+            "curseforge": 1083160
+        },
+        {
+            "slug": "bare-bones-x-armor-trim-item-fix",
+            "modrinth": "bare-bones-x-armor-trim-item-fix",
+            "curseforge": 1226797
+        },
+        {
+            "slug": "capitalized-font",
+            "modrinth": "capitalized-font",
+            "curseforge": 1083177
         }
     ]
 }
