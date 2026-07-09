@@ -1,5 +1,5 @@
 {
-    "updated": "2026-07-09 10:00:59 UTC",
+    "updated": "2026-07-09 15:24:16 UTC",
     "type": "resourcePack",
     "name": "Bare Bones - 3D Mace",
     "description": "Adds a 3D model to the mace, making it visually more dynamic while keeping with the minimalist Bare Bones design.",
@@ -11,7 +11,7 @@
         "items",
         "realistic"
     ],
-    "modrinthDownloads": 66804,
-    "curseforgeDownloads": 27941,
-    "totalDownloads": 94745
+    "modrinthDownloads": 66842,
+    "curseforgeDownloads": 27945,
+    "totalDownloads": 94787
 }
