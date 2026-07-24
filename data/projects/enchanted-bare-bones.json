@@ -1,5 +1,5 @@
 {
-    "updated": "2026-07-24 13:57:43 UTC",
+    "updated": "2026-07-24 19:38:19 UTC",
     "type": "resourcePack",
     "name": "Enchanted Bare Bones",
     "description": "Introduces smooth animations and glowing emissive effects to items, adding magic while preserving the minimalist look of Bare Bones.",
@@ -11,7 +11,7 @@
         "items",
         "simplistic"
     ],
-    "modrinthDownloads": 32954,
-    "curseforgeDownloads": 2236,
-    "totalDownloads": 35190
+    "modrinthDownloads": 32978,
+    "curseforgeDownloads": 2237,
+    "totalDownloads": 35215
 }
