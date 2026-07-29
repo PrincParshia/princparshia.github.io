@@ -81,11 +81,10 @@
     position:fixed;
     top:0; left:0;
     width:100%; height:100%;
-    z-index:1; /* above .banner (z-index:0) so pixels actually composite over the image instead of being hidden under it */
+    z-index:1;
     pointer-events:none;
   }
 
-  /* Top nav panel — Adwaita/Material connected segmented buttons with sliding indicator */
   .nav-panel{
     display:flex;
     justify-content:center;
@@ -215,7 +214,6 @@
     color:var(--accent-light);
   }
 
-  /* Projects & Contact sections */
   .section-inner{
     padding:120px 0;
     min-height:100vh;
@@ -323,7 +321,6 @@
     color:var(--text);
   }
 
-  /* Downloads pinned to the top-right corner, store buttons pinned to the bottom-right corner */
   .project-card .download-count{
     position:absolute;
     top:16px;
@@ -375,13 +372,44 @@
   }
 
   @media (max-width: 620px){
-    .project-card{ flex-direction:column; height:auto; padding-right:16px; padding-bottom:70px; }
-    .project-card .icon-frame{ width:100%; height:100px; align-self:auto; }
-    .project-card .download-count{ top:16px; right:16px; }
-    .project-card .store-links{ bottom:16px; right:16px; }
+    .project-card{
+      display:grid;
+      align-items:start;
+      grid-template-columns:64px 1fr;
+      grid-template-rows:auto auto auto auto;
+      grid-template-areas:
+        "icon name"
+        "icon desc"
+        "tags tags"
+        "downloads buttons";
+      column-gap:14px;
+      row-gap:12px;
+      height:auto;
+      padding:16px;
+    }
+    .project-card .icon-frame{ grid-area:icon; width:64px; height:64px; align-self:start; }
+    .project-card .body{ display:contents; }
+    .project-card .top-row{ grid-area:name; margin-bottom:0; align-self:end; }
+    .project-card p{ grid-area:desc; margin-bottom:0; align-self:start; }
+    .project-card .tags{ grid-area:tags; align-self:start; margin-top:2px; }
+    .project-card .download-count{
+      grid-area:downloads;
+      position:static;
+      top:auto; right:auto; bottom:auto; left:auto;
+      justify-self:start;
+      align-self:end;
+      margin-top:0;
+    }
+    .project-card .store-links{
+      grid-area:buttons;
+      position:static;
+      top:auto; right:auto; bottom:auto; left:auto;
+      justify-self:end;
+      align-self:end;
+      margin-top:0;
+    }
   }
 
-  /* Info & Links panels under the hero */
   .info-links{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -449,8 +477,11 @@
   }
 
   @media (max-width: 620px){
-    .hero{ flex-direction:column; align-items:flex-start; gap:28px; min-height:auto; padding:96px 0 40px; }
+    .hero{ flex-direction:column; align-items:center; gap:28px; min-height:auto; padding:96px 0 40px; text-align:center; }
     .hero .pfp-wrap{ width:140px; height:140px; }
+    .hero .intro{ text-align:center; }
+    .hero .intro .sub{ margin-left:auto; margin-right:auto; }
+    .hero .intro .pillrow{ justify-content:center; }
     .section-inner{ padding:80px 0; min-height:auto; }
   }
 
@@ -597,13 +628,6 @@ const BAYER4 = [
 ];
 function bayer(c, r) { return BAYER4[r & 3][c & 3] / 16; }
 
-// Zone where the grid dissolves into the blurred banner above it.
-// Below FADE_START: no pixels at all (pure banner).
-// Between FADE_START and FADE_END: pixels dither in exactly like the
-// cursor-hover dissolve (proximity vs. per-pixel bayer threshold + a
-// dimmed in-between state), so the boundary reads as a soft, grainy
-// melt instead of a line.
-// Above FADE_END: the grid behaves exactly as before.
 const FADE_START = 0.28;
 const FADE_END = 0.52;
 
@@ -611,11 +635,9 @@ let W, H, COLS, ROWS;
 let mouse = { x: -9999, y: -9999 };
 let grid = [];
 
-// VOID blobs — carve empty holes through the field (many, big)
 const NUM_VOID_BLOBS = 35;
 let voidBlobs = [];
 
-// SLIME blobs — clusters of high-opacity pixels (chunky islands)
 const NUM_SLIME_BLOBS = 14;
 let slimeBlobs = [];
 
@@ -628,8 +650,8 @@ function makeBlob(isSlime) {
     tx: Math.random() * W,
     ty: H * 0.5 + Math.random() * H * 0.5,
     radius: isSlime
-      ? Math.random() * 90 + 60    // slime chunks — medium sized
-      : Math.random() * 150 + 100, // void holes — big
+      ? Math.random() * 90 + 60
+      : Math.random() * 150 + 100,
     pulsePhase: Math.random() * Math.PI * 2,
     pulseSpeed: Math.random() * 0.008 + 0.003,
     pulseAmp: Math.random() * 25 + 10,
@@ -674,7 +696,6 @@ window.addEventListener('resize', resize);
 window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
 
-// Ghost slime blobs that randomly spawn and fade
 let ghosts = [];
 let ghostTimer = 100;
 
@@ -846,8 +867,6 @@ function draw() {
 resize();
 draw();
 
-// The banner image itself fades to the solid background color as the
-// page scrolls (an overlay inside the fixed banner, opacity tied to scroll).
 (function initBannerFade(){
   const fade = document.getElementById('bannerFade');
   if (!fade) return;
@@ -861,9 +880,6 @@ draw();
   update();
 })();
 
-// Load the project manifest (projects.json, alongside index.html) and then
-// fetch each project's own JSON from data/projects/{id}.json — nothing here
-// needs to be edited by hand when a new mod/resource pack is added.
 (function loadProjects(){
   const list = document.getElementById('projectList');
   if (!list) return;
@@ -901,7 +917,6 @@ draw();
   fetch('projects.json', { cache: 'no-store' })
     .then(r => r.ok ? r.json() : Promise.reject(new Error(`projects.json returned ${r.status}`)))
     .then(manifestData => {
-      // Manifest shape: { mods: [{ slug, modrinth, curseforge }, ...], resourcePacks: [...] }
       const mods = Array.isArray(manifestData.mods) ? manifestData.mods.map(e => ({ ...e, type: 'mod' })) : [];
       const packs = Array.isArray(manifestData.resourcePacks) ? manifestData.resourcePacks.map(e => ({ ...e, type: 'resourcePack' })) : [];
       const manifest = [...mods, ...packs];
@@ -938,9 +953,9 @@ draw();
           const resourcePackTag = isResourcePack ? `<span class="tag">${RESOURCEPACK_ICON}Resource Pack</span>` : '';
 
           // Env, loaders, and Resource Pack are always shown in full. Categories are
-          // the only thing that compresses into a "+N" tag, trimmed just enough to
-          // keep the whole row within a reasonable total tag budget.
-          const maxTotal = 5;
+          // the only thing that compresses into a "+N" tag. Mobile cards are much
+          // narrower than desktop, so they get a tighter budget to avoid overflow.
+          const maxTotal = window.matchMedia('(max-width: 620px)').matches ? 3 : 5;
           const reserved = (envTag ? 1 : 0) + loaderTagsArr.length + (resourcePackTag ? 1 : 0);
           const categoryBudget = Math.max(0, maxTotal - reserved);
           const visibleCategories = categoryTags.slice(0, categoryBudget);
@@ -985,9 +1000,8 @@ draw();
     });
 })();
 
-// Auto-calculate age from birthdate
 (function setAge(){
-  const birth = new Date(2011, 4, 20); // May 20, 2011 (month is 0-indexed)
+  const birth = new Date(2011, 4, 20);
   const now = new Date();
   let age = now.getFullYear() - birth.getFullYear();
   const hasHadBirthdayThisYear =
@@ -998,7 +1012,6 @@ draw();
   if (el) el.textContent = age;
 })();
 
-// Sliding indicator + smooth-scroll nav
 (function initNav(){
   const indicator = document.querySelector('.nav-panel .indicator');
   const btns = Array.from(document.querySelectorAll('.nav-btn'));
@@ -1019,7 +1032,6 @@ draw();
     moveIndicatorTo(btn);
   }
 
-  // Click: smooth-scroll to the target section
   btns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1034,7 +1046,6 @@ draw();
     });
   });
 
-  // Scroll-spy: highlight the nav button matching the section currently in view
   let isProgrammaticScroll = false;
   let scrollEndTimer = null;
 
@@ -1053,7 +1064,6 @@ draw();
   moveIndicatorTo(document.querySelector('.nav-btn.active'), false);
   window.addEventListener('resize', () => moveIndicatorTo(document.querySelector('.nav-btn.active'), false));
 })();
-
 
 </script>
 </body>
