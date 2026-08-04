@@ -1,5 +1,5 @@
 {
-    "updated": "2026-08-04 14:29:47 UTC",
+    "updated": "2026-08-04 19:44:44 UTC",
     "type": "resourcePack",
     "name": "Capitalized Font",
     "description": "Replaces all lowercase letters with a small uppercase version for a uniform uppercase look.",
@@ -9,7 +9,7 @@
         "16x",
         "fonts"
     ],
-    "modrinthDownloads": 19058,
-    "curseforgeDownloads": 24043,
-    "totalDownloads": 43101
+    "modrinthDownloads": 19066,
+    "curseforgeDownloads": 24068,
+    "totalDownloads": 43134
 }
