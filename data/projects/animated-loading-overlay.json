@@ -1,0 +1,18 @@
+{
+    "updated": "2026-08-12 13:58:37 UTC",
+    "type": "mod",
+    "name": "Animated Loading Overlay",
+    "description": "The Loading Animation Minecraft Actually Deserves!",
+    "icon": "https://cdn.modrinth.com/data/yDTp6cAo/8fb3c4506bcccabdc25e24de6a8f75f5654e6ef9_96.webp",
+    "loaders": [
+        "fabric",
+        "neoforge"
+    ],
+    "environment": "Client",
+    "categories": [
+        "utility"
+    ],
+    "modrinthDownloads": 387,
+    "curseforgeDownloads": 1431,
+    "totalDownloads": 1818
+}
