@@ -1,15 +1,15 @@
 {
-    "updated": "2026-08-12 07:40:58 UTC",
+    "updated": "2026-08-12 13:22:26 UTC",
     "type": "resourcePack",
     "name": "Capitalized Font",
-    "description": "Replaces all lowercase letters with a small uppercase version for a uniform uppercase look.",
+    "description": "Uniform capitalization across all letters!",
     "icon": "https://cdn.modrinth.com/data/TAiVqEx5/5b9ad47edb6bf4dcd8ac16dcc331ea24aa6b3df2_96.webp",
     "environment": "Client",
     "categories": [
         "16x",
         "fonts"
     ],
-    "modrinthDownloads": 19222,
-    "curseforgeDownloads": 24425,
-    "totalDownloads": 43647
+    "modrinthDownloads": 19226,
+    "curseforgeDownloads": 24429,
+    "totalDownloads": 43655
 }
