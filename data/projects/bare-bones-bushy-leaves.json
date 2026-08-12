@@ -1,5 +1,5 @@
 {
-    "updated": "2026-08-12 13:58:42 UTC",
+    "updated": "2026-08-12 19:09:23 UTC",
     "type": "resourcePack",
     "name": "Bare Bones - Bushy Leaves",
     "description": "Enhances the leaves textures in Bare Bones with more detail and style, improving the visual appeal while keeping the minimalist design.",
@@ -10,7 +10,7 @@
         "blocks",
         "environment"
     ],
-    "modrinthDownloads": 2185,
+    "modrinthDownloads": 2189,
     "curseforgeDownloads": 3607,
-    "totalDownloads": 5792
+    "totalDownloads": 5796
 }
