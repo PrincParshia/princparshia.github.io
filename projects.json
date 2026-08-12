@@ -19,6 +19,11 @@
             "slug": "td-end-crystal",
             "modrinth": "td-end-crystal",
             "curseforge": 1551623
+        },
+        {
+            "slug": "animated-loading-overlay",
+            "modrinth": "animated-loading-overlay",
+            "curseforge": 1615381
         }
     ],
     "resourcePacks": [
