@@ -1,5 +1,5 @@
 {
-    "updated": "2026-09-03 10:59:39 UTC",
+    "updated": "2026-09-03 16:13:00 UTC",
     "type": "resourcePack",
     "name": "Bare Bones - 3D Mace",
     "description": "Three dimensional mace model!",
@@ -11,7 +11,7 @@
         "items",
         "realistic"
     ],
-    "modrinthDownloads": 72534,
-    "curseforgeDownloads": 29344,
-    "totalDownloads": 101878
+    "modrinthDownloads": 72556,
+    "curseforgeDownloads": 29347,
+    "totalDownloads": 101903
 }
