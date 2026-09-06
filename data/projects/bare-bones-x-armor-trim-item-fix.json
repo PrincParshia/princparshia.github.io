@@ -1,5 +1,5 @@
 {
-    "updated": "2026-09-06 04:03:05 UTC",
+    "updated": "2026-09-06 10:41:30 UTC",
     "type": "resourcePack",
     "name": "Bare Bones x Armor Trim Item Fix",
     "description": "Redesigns armor trim item textures to align with the Bare Bones aesthetic, ensuring a cohesive visual experience.",
@@ -9,7 +9,7 @@
         "16x",
         "items"
     ],
-    "modrinthDownloads": 33181,
-    "curseforgeDownloads": 6049,
-    "totalDownloads": 39230
+    "modrinthDownloads": 33186,
+    "curseforgeDownloads": 6052,
+    "totalDownloads": 39238
 }
