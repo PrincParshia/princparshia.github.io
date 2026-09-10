@@ -1,5 +1,5 @@
 {
-    "updated": "2026-09-10 04:08:13 UTC",
+    "updated": "2026-09-10 11:01:09 UTC",
     "type": "resourcePack",
     "name": "Bare Bones - Better Leaves",
     "description": "Enhance leaf visuals!",
@@ -10,7 +10,7 @@
         "blocks",
         "environment"
     ],
-    "modrinthDownloads": 278389,
-    "curseforgeDownloads": 3353,
-    "totalDownloads": 281742
+    "modrinthDownloads": 278476,
+    "curseforgeDownloads": 3356,
+    "totalDownloads": 281832
 }
