@@ -1,5 +1,5 @@
 {
-    "updated": "2026-09-11 16:15:18 UTC",
+    "updated": "2026-09-11 20:48:00 UTC",
     "type": "resourcePack",
     "name": "Bare Bones - Connected Glass",
     "description": "Makes glass blocks and panes connect seamlessly!",
@@ -10,7 +10,7 @@
         "blocks",
         "tweaks"
     ],
-    "modrinthDownloads": 352316,
-    "curseforgeDownloads": 117769,
-    "totalDownloads": 470085
+    "modrinthDownloads": 352443,
+    "curseforgeDownloads": 117790,
+    "totalDownloads": 470233
 }
