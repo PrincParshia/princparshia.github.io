@@ -1,5 +1,5 @@
 {
-    "updated": "2026-09-12 04:06:56 UTC",
+    "updated": "2026-09-12 10:27:51 UTC",
     "type": "mod",
     "name": "Anemos",
     "description": "Unleash the true gamma and conquer the darkness!",
@@ -13,7 +13,7 @@
         "cursed",
         "utility"
     ],
-    "modrinthDownloads": 8000,
+    "modrinthDownloads": 8006,
     "curseforgeDownloads": 2782,
-    "totalDownloads": 10782
+    "totalDownloads": 10788
 }
