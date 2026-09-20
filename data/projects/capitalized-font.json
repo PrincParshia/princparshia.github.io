@@ -1,5 +1,5 @@
 {
-    "updated": "2026-09-20 11:03:50 UTC",
+    "updated": "2026-09-20 15:50:32 UTC",
     "type": "resourcePack",
     "name": "Capitalized Font",
     "description": "Uniform capitalization across all letters!",
@@ -9,7 +9,7 @@
         "16x",
         "fonts"
     ],
-    "modrinthDownloads": 20107,
-    "curseforgeDownloads": 26942,
-    "totalDownloads": 47049
+    "modrinthDownloads": 20113,
+    "curseforgeDownloads": 26949,
+    "totalDownloads": 47062
 }
