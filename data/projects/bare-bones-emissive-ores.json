@@ -1,5 +1,5 @@
 {
-    "updated": "2026-09-25 11:35:07 UTC",
+    "updated": "2026-09-25 16:58:15 UTC",
     "type": "resourcePack",
     "name": "Bare Bones - Emissive Ores",
     "description": "Adds glowing emissive effects to ores, enhancing their appearance while maintaining the minimalist style of the Bare Bones pack.",
@@ -11,7 +11,7 @@
         "themed",
         "blocks"
     ],
-    "modrinthDownloads": 71595,
-    "curseforgeDownloads": 20818,
-    "totalDownloads": 92413
+    "modrinthDownloads": 71613,
+    "curseforgeDownloads": 20825,
+    "totalDownloads": 92438
 }
