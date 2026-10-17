@@ -1,5 +1,5 @@
 {
-    "updated": "2026-10-16 20:48:45 UTC",
+    "updated": "2026-10-17 03:55:05 UTC",
     "type": "mod",
     "name": "Windowed Fullscreen",
     "description": "Enables windowed fullscreen mode, allowing for a cleaner experience while retaining access to the taskbar and panel or other apps.",
@@ -13,7 +13,7 @@
         "cursed",
         "utility"
     ],
-    "modrinthDownloads": 50554,
-    "curseforgeDownloads": 67970,
-    "totalDownloads": 118524
+    "modrinthDownloads": 50632,
+    "curseforgeDownloads": 67992,
+    "totalDownloads": 118624
 }
