@@ -1,5 +1,5 @@
 {
-    "updated": "2026-10-17 10:26:38 UTC",
+    "updated": "2026-10-17 15:20:30 UTC",
     "type": "resourcePack",
     "name": "Bare Bones - Low On Fire",
     "description": "Reduces the fire height when burning!",
@@ -10,7 +10,7 @@
         "tweaks",
         "utility"
     ],
-    "modrinthDownloads": 181071,
-    "curseforgeDownloads": 46535,
-    "totalDownloads": 227606
+    "modrinthDownloads": 181249,
+    "curseforgeDownloads": 46544,
+    "totalDownloads": 227793
 }
