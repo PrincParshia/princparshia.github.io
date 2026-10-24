@@ -1,5 +1,5 @@
 {
-    "updated": "2026-10-24 04:08:04 UTC",
+    "updated": "2026-10-24 10:40:56 UTC",
     "type": "mod",
     "name": "Animated Loading Overlay",
     "description": "The Loading Animation Minecraft Actually Deserves!",
@@ -12,7 +12,7 @@
     "categories": [
         "utility"
     ],
-    "modrinthDownloads": 1642,
+    "modrinthDownloads": 1648,
     "curseforgeDownloads": 4719,
-    "totalDownloads": 6361
+    "totalDownloads": 6367
 }
