@@ -1,5 +1,5 @@
 {
-    "updated": "2026-11-03 13:56:25 UTC",
+    "updated": "2026-11-03 23:05:17 UTC",
     "type": "mod",
     "name": "Brightness Aura",
     "description": "Darkness? Never heard of it",
@@ -15,7 +15,7 @@
         "game-mechanics",
         "magic"
     ],
-    "modrinthDownloads": 61387,
+    "modrinthDownloads": 61403,
     "curseforgeDownloads": 13978,
-    "totalDownloads": 75365
+    "totalDownloads": 75381
 }
